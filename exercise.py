@@ -102,7 +102,7 @@ print(f"4. 'file_2' exists: {exists('file_2', cwd)}")
 print(f"5. 'file_2' size: {size('file_2', cwd)}")
 print(f"6. 'updated' parameter value: {parameter_value('file_2', cwd, 'updated')}")
 print(f"7. Status of 'cron.service': {service_status('cron.service')}")
-#service_control('cron.service', 'stop')
+service_control('cron.service', 'stop')
 print(f"8. Status of 'cron.service' after stopping: {service_status('cron.service')}")
 print(f"9. OS version: {OS_version()}")
 
