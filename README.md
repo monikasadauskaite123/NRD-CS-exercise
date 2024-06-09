@@ -22,7 +22,7 @@ python exercise.py
 ```
 to obtain results for the given exercise. Make sure you are in the correct directory. 
 > [!WARNING]
-> This command line will stop `cron.service`
+> This command line will stop `cron.service`, which can only be done using `sudo`. Hence, a sudo password will be necessary
 
 Moreover, type
 ```
