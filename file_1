@@ -1,0 +1,10 @@
+global:
+  soversion: 1.1.1
+  ownerorgname: 'my org'
+  ownerorgemail: ''
+  https_certification: 'provided'
+  ownerorgphone: ''
+  ownerorglogo: 'owner.svg'
+  hnmanager: '10.0.0.0/8,192.168.0.0/16,172.16.0.0/12'
+  ntpserver: '10.10.10.10'
+  syslogintsrv: '127.0.0.1'
