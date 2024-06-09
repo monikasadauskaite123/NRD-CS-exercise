@@ -1,5 +1,20 @@
 # NRD-CS-exercise
-The exercise can be found in the exercise.txt file. Solution to the exercise is the exercise.py file written in the pytest framework.
+The exercise is the following
+
+Write test script using pytest framework:
+
+1. Check if file_1 exist
+2. Display file_1 age in hours
+3. Check and print "hnmanager" parameter value
+4. Check if file_2 exist
+5. Display file_2 size in bytes
+6. Check and print "updated" parameter value
+7. Pick any random service. Check if service is running
+8. Stop service. Run test again and check status
+9. Print OS version
+10. Commit your project to github and share with us.
+
+Solution to the exercise is the exercise.py file written in the pytest framework.
 # Application
 In the terminal type command line
 ```
