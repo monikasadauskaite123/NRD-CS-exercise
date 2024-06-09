@@ -47,7 +47,9 @@ Non-pytest functions
   - arguments:
     - `file_name` - name of the file, string
     - `path` - directory of the file, string
-  - returns a tuple, with the first element a float - the age of the file (from birth/creation/change time) in hours, rounded to 0.1. The second element is of a boolean data type. `True` corresponds to a successful application of `st_birthtime` and `False` corresponds to the application of `os.path.getctime(file)`
+  - returns:
+    - a tuple, with the first element a float - the age of the file (from birth/creation/change time) in hours, rounded to 0.1. The second element is of a boolean data type. `True` corresponds to a successful application of `st_birthtime` and `False` corresponds to the application of `os.path.getctime(file)`
+    - a string `'ExistError'` in case the file does not exist in a given directory
 - `find_parameter(diction, parameter)`: a recursive function that returns the value, i.e. item, in a nested dictionary, given a parameter, i.e. key
   - arguments:
     - `diction` - nested dictionary, dict
@@ -55,13 +57,14 @@ Non-pytest functions
   - returns:
     - the item (first occurrence) corresponding to the given parameter
     - `None` if there is no such parameter key
-
+    
 - `parameter_value(file_name, path, parameter)`: reads and loads a file and returns the value, i.e. item, of a given a parameter, i.e. key, in a nested dictionary
   - arguments:
     - `file_name` - name of the file, string
     - `path` - directory of the file, string
     - `parameter` - given key parameter
   - returns:
+    - a string `'ExistError'` in case the file does not exist in a given directory
     - a string `"LoadError"` in case the file is neither of the types 'json', 'yaml'
     - the item (first occurrence) corresponding to the given parameter
     - `None` if there is no such parameter key
@@ -70,7 +73,10 @@ Non-pytest functions
   - arguments:
     - `file_name` - name of the file, string
     - `path` - directory of the file, string
-  - returns a float corresponding to the size of the file in bytes in a given directory
+  - returns:
+    - a float corresponding to the size of the file in bytes in a given directory
+    - a string `'ExistError'` in case the file does not exist in a given directory
+
     
 - `service_status(service)`: returns the status of a given service
   - arguments:
@@ -94,14 +100,14 @@ Pytest functions
     - `file_name` - name of the file, string
     - `path` - directory, in which the file will be searched, string
     - `expect` - expected output of function `exists`. Possible values are `True` and `False`
-- `test_birth_time(file_name, path, expect)`: asserts if the `st_birthtime` was successfully applied
+- `test_birth_time(file_name, path, expect)`: asserts if the file exists and if `st_birthtime` was successfully applied
   - arguments:
     - `file_name` - name of the file, string
     - `path` - directory of the file, string
     - `expect` - expected output (second element) of function `birth_time`. Possible values are `True` and `False`
    
     
-- `test_parameter_value(file_name, path, parameter, expect_format)`: asserts if the data was successfully loaded from a given file. Asserts if the parameter exists in the file as a key. Asserts if the item corresponding to the given parameter key is of the correct format.
+- `test_parameter_value(file_name, path, parameter, expect_format)`: asserts if the file exists. Asserts if the data was successfully loaded from a given file. Asserts if the parameter exists in the file as a key. Asserts if the item corresponding to the given parameter key is of the correct format.
   - arguments:
     - `file_name` - name of the file, string
     - `path` - directory of the file, string
@@ -109,7 +115,7 @@ Pytest functions
     - `expect` - expected format of the output of the function `parameter_value`, tuple: first element corresponding to the number of strings separated by the character given by the second element of the tuple
    
 
-- `test_size(file_name, path, expect)`: asserts if the size of the given file is according to expectations
+- `test_size(file_name, path, expect)`: asserts if the file exists and if the size of the given file is according to expectations
   - arguments:
     - `file_name` - name of the file, string
     - `path` - directory of the file, string
