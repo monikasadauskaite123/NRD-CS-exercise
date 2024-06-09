@@ -19,11 +19,11 @@ def test_exists(file_name, path, expect):
     assert expect == result, f"{file_name} exists: {result}. Existence was expected: {expect}"
 
 def birth_time(file_name, path):
-    if not exists(file_name, path): return 'ExistError'
+    if not exists(file_name, path): return 'FileNotFoundError'
     #Linux does not store the creation time of files. We can try to obtain the birth time
     try:
         path1 = pathlib.Path(path+'/'+file_name)
-        stats = path.stat()
+        stats = path1.stat()
         birth_t = stats.st_birthtime
         birth = True
     except AttributeError:
@@ -39,7 +39,7 @@ def test_birth_time(file_name, path, expect):
     result = birth_time(file_name, path)
     
     assert type(result) != str, f"'{file_name}' does not exist in directory '{path}'"
-    assert [1], "Some Unix systems do not have the attribute 'st_birthtime', the function then returns 'Change' time instead of 'Birth' time"
+    assert result[1], "Some Unix systems do not have the attribute 'st_birthtime', the function then returns 'Change' time instead of 'Birth' time"
 
 def find_parameter(diction, parameter):
     for key in list(diction.keys()):
@@ -52,7 +52,7 @@ def find_parameter(diction, parameter):
                     return find_parameter(element, parameter)
             
 def parameter_value(file_name, path, parameter):
-    if not exists(file_name, path): return 'ExistError'
+    if not exists(file_name, path): return 'FileNotFoundError'
     with open(path+'/'+file_name, 'r') as file:
         try: data = yaml.safe_load(file)
         except:
@@ -65,7 +65,7 @@ def parameter_value(file_name, path, parameter):
     ("file_1", cwd, 'hnmanager', (3,',')),("file_2", cwd, 'updated', (3,':')),])
 def test_parameter_value(file_name, path, parameter, expect_format):
     value = parameter_value(file_name, path, parameter)
-    assert value != 'ExistError', f"'{file_name}' does not exist in directory '{path}'"
+    assert value != 'FileNotFoundError', f"'{file_name}' does not exist in directory '{path}'"
     assert value != 'LoadError', f"Error in loading the file {file_name}"
     
     #in case the parameter is not in the file 
@@ -76,13 +76,13 @@ def test_parameter_value(file_name, path, parameter, expect_format):
     assert len(split_value) == expect_format[0], f"Format of parameter '{parameter}' value in '{file_name}' is incorrect. Expected {expect_format[0]} strings separated by '{expect_format[1]}', got '{value}'"     
 
 def size(file_name, path):
-    if not exists(file_name, path): return 'ExistError'
+    if not exists(file_name, path): return 'FileNotFoundError'
     return os.path.getsize(path+'/'+file_name)
 
 @pytest.mark.parametrize("file_name, path, expect", [("file_2", cwd, 572),])
 def test_size(file_name, path, expect):
     file_size = size(file_name, path)
-    assert file_size != 'ExistError', f"'{file_name}' does not exist in directory '{path}'"
+    assert file_size != 'FileNotFoundError', f"'{file_name}' does not exist in directory '{path}'"
     assert file_size == expect, f'Expected size: {expect} bytes, actual size: {file_size} bytes'
 
 def service_status(service):
@@ -103,7 +103,9 @@ def OS_version():
 
 print("Displaying results:")
 print(f"1. 'file_1' exists: {exists('file_1', cwd)}")
-print(f"2. 'file_1' age in hrs: {birth_time('file_1', cwd)[0]}")
+time_birth = birth_time('file_1', cwd)
+if time_birth != 'FileNotFoundError': time_birth = time_birth[0]
+print(f"2. 'file_1' age in hrs: {time_birth}")
 print(f"3. 'hnmanager' parameter value: {parameter_value('file_1', cwd, 'hnmanager')}")
 print(f"4. 'file_2' exists: {exists('file_2', cwd)}")
 print(f"5. 'file_2' size in bytes: {size('file_2', cwd)}")
