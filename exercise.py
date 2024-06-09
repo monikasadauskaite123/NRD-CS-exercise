@@ -53,20 +53,18 @@ def parameter_value(file_name, path, parameter):
         except:
             try: data = json.load(file)
             except: return 'LoadError'
-    return find_parameter(data, parameter)
-    
+    return find_parameter(data, parameter)   
     
 @pytest.mark.parametrize("file_name, path, parameter, expect_format", [
     ("file_1", cwd, 'hnmanager', (3,',')),("file_2", cwd, 'updated', (3,':')),])
 def test_parameter_value(file_name, path, parameter, expect_format):
     value = parameter_value(file_name, path, parameter)
     
-    assert value != 'LoadError', f"Error in loading the file {file_name}"
+    assert value != 'LoadError', f"Error in loading the file {file_name}" #in case the data was not loaded
     
-    #in case the parameter is not in the file of the writing format is incorrect
-    assert value != None, f"No parameter '{parameter}' in '{file_name}'"
+    assert value != None, f"No parameter '{parameter}' in '{file_name}'" #in case the parameter is not in the file
         
-    #in case the value of the parameter is not as expected
+    #in case the format of the value of the parameter is not as expected
     split_value = value.split(expect_format[1])
     assert len(split_value) == expect_format[0], f"Format of parameter '{parameter}' value in '{file_name}' is incorrect. Expected {expect_format[0]} strings separated by '{expect_format[1]}', got '{value}'"     
 
@@ -99,10 +97,11 @@ print(f"1. 'file_1' exists: {exists('file_1', cwd)}")
 print(f"2. 'file_1' created {birth_time('file_1', cwd)[0]} hrs ago")
 print(f"3. 'hnmanager' parameter value: {parameter_value('file_1', cwd, 'hnmanager')}")
 print(f"4. 'file_2' exists: {exists('file_2', cwd)}")
-print(f"5. 'file_2' size: {size('file_2', cwd)}")
+print(f"5. 'file_2' size: {size('file_2', cwd)} bytes")
 print(f"6. 'updated' parameter value: {parameter_value('file_2', cwd, 'updated')}")
 print(f"7. Status of 'cron.service': {service_status('cron.service')}")
 service_control('cron.service', 'stop')
 print(f"8. Status of 'cron.service' after stopping: {service_status('cron.service')}")
 print(f"9. OS version: {OS_version()}")
+
 
