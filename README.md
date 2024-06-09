@@ -20,7 +20,7 @@ In the terminal type command line
 ```
 python exercise.py
 ```
-to obtain results for the given exercise. 
+to obtain results for the given exercise. Make sure you are in the correct directory. 
 > [!WARNING]
 > This command line will stop `cron.service`
 
